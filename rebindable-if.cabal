@@ -1,0 +1,23 @@
+Name:                rebindable-if
+Version:             0.1
+License:             BSD3
+License-File:        LICENSE
+Author:              Nils Schweinsberg
+Maintainer:          mail@n-sch.de
+Category:            Language
+
+Synopsis:            Rebindable if-then-else expressions for Monads
+
+Build-Type:          Simple
+Cabal-Version:       >= 1.8
+
+Source-Repository head
+    type:       git
+    location:   http://github.com/mcmaniac/rebindable-if
+
+Library
+
+    GHC-Options:            -Wall
+
+    Exposed-Modules:
+        Data.IfThenElse
