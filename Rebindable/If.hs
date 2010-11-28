@@ -37,27 +37,25 @@ instance (Monad m, RebindableIf t (m a)) => RebindableIf (m t) (m a) where
         b <- m
         ifThenElse b t e
 
-{- $example
-
-> {-# LANGUAGE RebindableSyntax #-}
->
-> import Rebindable.If
->
-> import System.Environment
-> import System.Directory
->
-> main = do
->     [d] <- getArgs
->     h   <- getHomeDirectory
->
->     -- Test: IO Bool
->     if doesDirectoryExist d
->        then putStrLn "Found directory."
->        else putStrLn "No such directory."
->
->     -- Test: Bool
->     if d == h
->        then putStrLn $ d ++ " is your home directory."
->        else putStrLn $ d ++ " is not your home directory."
-
--}
+-- $example
+-- 
+-- > {-# LANGUAGE RebindableSyntax #-}
+-- >
+-- > import Rebindable.If
+-- >
+-- > import System.Environment
+-- > import System.Directory
+-- >
+-- > main = do
+-- >     [d] <- getArgs
+-- >     h   <- getHomeDirectory
+-- >
+-- >     -- Test: IO Bool
+-- >     if doesDirectoryExist d
+-- >        then putStrLn "Found directory."
+-- >        else putStrLn "No such directory."
+-- >
+-- >     -- Test: Bool
+-- >     if d == h
+-- >        then putStrLn $ d ++ " is your home directory."
+-- >        else putStrLn $ d ++ " is not your home directory."

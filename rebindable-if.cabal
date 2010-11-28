@@ -21,5 +21,8 @@ Library
 
     GHC-Options:            -Wall
 
+    Build-Depends:
+        base == 4.*
+
     Exposed-Modules:
         Rebindable.If
