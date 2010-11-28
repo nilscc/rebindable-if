@@ -6,7 +6,9 @@ Author:              Nils Schweinsberg
 Maintainer:          mail@n-sch.de
 Category:            Language
 
-Synopsis:            Rebindable if-then-else expressions for Monads
+Synopsis:            Rebindable if-then-else expressions
+Description:         This module provides monadic versions of if-then-else
+                     expressions. Requires the "RebindableSyntax" extension.
 
 Build-Type:          Simple
 Cabal-Version:       >= 1.8
@@ -20,4 +22,4 @@ Library
     GHC-Options:            -Wall
 
     Exposed-Modules:
-        Data.IfThenElse
+        Rebindable.If

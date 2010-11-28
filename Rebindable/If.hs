@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Data.IfThenElse
+-- Module      :  Rebindable.If
+--
 -- Copyright   :  (c) Nils Schweinsberg 2010
 -- License     :  BSD3 (see the file LICENSE)
 --
@@ -9,68 +10,50 @@
 -- Portability :  non-portable
 --
 -- Import this library to overload @if then else@ expressions. Requires the
--- RebindableSyntax extension.
+-- @RebindableSyntax@ extension.
 --
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE MultiParamTypeClasses, FunctionalDependencies, FlexibleInstances,
-             UndecidableInstances
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FlexibleContexts
              #-}
 
-module Data.IfThenElse
+module Rebindable.If
     (
-      IfThenElse (..)
+      RebindableIf (..)
 
       -- * Example usage
       -- $example
     ) where
 
-class IfThenElse a b c d | a b c -> d where
-    ifThenElse :: a -> b -> c -> d
+class RebindableIf a b where
+    ifThenElse :: a -> b -> b -> b
 
-instance (Monad m, IfThenElse (t a) (a -> m b) (m b) (m b))
-      => IfThenElse (m (t a)) (a -> m b) (m b) (m b) where
-    ifThenElse m t e = do
-        b <- m
-        ifThenElse b t e
-
-instance (Monad m, IfThenElse a (m b) (m c) (m d))
-      => IfThenElse (m a) (m b) (m c) (m d) where
-    ifThenElse m t e = do
-        b <- m
-        ifThenElse b t e
-
-instance IfThenElse Bool a a a where
+instance RebindableIf Bool a where
     ifThenElse True  t _ = t
     ifThenElse False _ e = e
 
-instance IfThenElse (Maybe a) (a -> b) b b where
-    ifThenElse (Just a) t _ = t a
-    ifThenElse Nothing  _ e = e
-
+instance (Monad m, RebindableIf t (m a)) => RebindableIf (m t) (m a) where
+    ifThenElse m t e = do
+        b <- m
+        ifThenElse b t e
 
 {- $example
 
 > {-# LANGUAGE RebindableSyntax #-}
 >
-> import Data.IfThenElse
+> import Rebindable.If
 >
 > import System.Environment
 > import System.Directory
 >
 > main = do
 >     [d] <- getArgs
->     h <- getHomeDirectory
+>     h   <- getHomeDirectory
 >
 >     -- Test: IO Bool
 >     if doesDirectoryExist d
 >        then putStrLn "Found directory."
 >        else putStrLn "No such directory."
->
->     -- Test: IO (Maybe FilePath)
->     if findExecutable d
->        then \fp -> putStrLn $ "Found executable located at " ++ fp
->        else putStrLn "No such executable."
 >
 >     -- Test: Bool
 >     if d == h
