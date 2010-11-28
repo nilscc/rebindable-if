@@ -49,32 +49,30 @@ instance IfThenElse (Maybe a) (a -> b) b b where
     ifThenElse Nothing  _ e = e
 
 
-{- $example
-
-> {-# LANGUAGE RebindableSyntax #-}
->
-> import Data.IfThenElse
->
-> import System.Environment
-> import System.Directory
->
-> main = do
->     [d] <- getArgs
->     h <- getHomeDirectory
->
->     -- Test: IO Bool
->     if doesDirectoryExist d
->        then putStrLn "Found directory."
->        else putStrLn "No such directory."
->
->     -- Test: IO (Maybe FilePath)
->     if findExecutable d
->        then \fp -> putStrLn $ "Found executable located at " ++ fp
->        else putStrLn "No such executable."
->
->     -- Test: Bool
->     if d == h
->        then putStrLn $ d ++ " is your home directory."
->        else putStrLn $ d ++ " is not your home directory."
-
--}
+-- $example
+-- 
+-- > {-# LANGUAGE RebindableSyntax #-}
+-- >
+-- > import Data.IfThenElse
+-- >
+-- > import System.Environment
+-- > import System.Directory
+-- >
+-- > main = do
+-- >     [d] <- getArgs
+-- >     h <- getHomeDirectory
+-- >
+-- >     -- Test: IO Bool
+-- >     if doesDirectoryExist d
+-- >        then putStrLn "Found directory."
+-- >        else putStrLn "No such directory."
+-- >
+-- >     -- Test: IO (Maybe FilePath)
+-- >     if findExecutable d
+-- >        then \fp -> putStrLn $ "Found executable located at " ++ fp
+-- >        else putStrLn "No such executable."
+-- >
+-- >     -- Test: Bool
+-- >     if d == h
+-- >        then putStrLn $ d ++ " is your home directory."
+-- >        else putStrLn $ d ++ " is not your home directory."
