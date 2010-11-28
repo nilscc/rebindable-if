@@ -25,8 +25,8 @@ module Rebindable.If
       -- $example
     ) where
 
-class RebindableIf a b where
-    ifThenElse :: a -> b -> b -> b
+class RebindableIf t a where
+    ifThenElse :: t -> a -> a -> a
 
 instance RebindableIf Bool a where
     ifThenElse True  t _ = t
